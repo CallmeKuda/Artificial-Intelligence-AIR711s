@@ -25,4 +25,9 @@ This part sets up the GUI window using Turtle. It creates an environment with ob
 creates a cleaning robot, and sets up keyboard controls for the robot's movements.
 Then, it starts the event loop to listen for user input and update the simulation accordingly.
 
+
+![image](https://github.com/CallmeKuda/Artificial-Intelligence-AIR711s/assets/84506806/3b519065-6276-46bd-9c6c-01ceb07a6956)
+
+This is the result of the envirnoment creation
+
 2. Hill climbing algorithm for solving the Traveling Salesman Problem (TSP) in the context of visiting various places in Windhoek.
