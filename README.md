@@ -15,4 +15,14 @@ The Environment class represents the grid environment where the cleaning robot o
 It has methods to initialize the environment with obstacles, check if a cell is an obstacle or cleaned, 
 mark a cell as cleaned, and draw the environment on the screen using turtle graphics.
 
+![image](https://github.com/CallmeKuda/Artificial-Intelligence-AIR711s/assets/84506806/7aca30ed-0037-4e39-951d-abd6336b1995)
+
+The _CleaningRobotTurtle_ class, which represents the cleaning robot as a turtle. It has methods to initialize the robot, move it forward, turn left, and turn right. The robot keeps track of its position, orientation, and interacts with the environment to clean cells
+
+![image](https://github.com/CallmeKuda/Artificial-Intelligence-AIR711s/assets/84506806/498c1d76-daf0-467e-9b5d-2d8d007fa62d)
+
+This part sets up the GUI window using Turtle. It creates an environment with obstacles,
+creates a cleaning robot, and sets up keyboard controls for the robot's movements.
+Then, it starts the event loop to listen for user input and update the simulation accordingly.
+
 2. Hill climbing algorithm for solving the Traveling Salesman Problem (TSP) in the context of visiting various places in Windhoek.
