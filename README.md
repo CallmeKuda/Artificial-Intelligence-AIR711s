@@ -30,4 +30,4 @@ Then, it starts the event loop to listen for user input and update the simulatio
 
 This is the result of the envirnoment creation
 
-2. Hill climbing algorithm for solving the Traveling Salesman Problem (TSP) in the context of visiting various places in Windhoek.
+2.This repository explores the application of the Hill climbing algorithm for solving the Traveling Salesman Problem (TSP) in the context of visiting various places in Windhoek. The objective is to visit a set of places exactly once, returning to the starting point, while minimizing total travel distance.
