@@ -217,8 +217,45 @@ def follow_path(robot, all_paths, optimal_path):
 
         robot.setheading(robot.orientation)
 
+        # Move forward, but skip the last step to the end position
+        if current_pos != optimal_path[-2]:
+            robot.move_forward()
+        else:
+            break  # Break out of the loop when reaching the end position
+
+    robot.pensize(1)  # Reset the pen size to the default
+
+    # Follow the optimal path in red
+    robot.color('red')
+    for i in range(len(optimal_path) - 1):
+        current_pos = optimal_path[i]
+        next_pos = optimal_path[i + 1]
+
+        # Determine the direction to turn
+        if next_pos[0] > current_pos[0]:  # Right
+            robot.orientation = 0
+        elif next_pos[0] < current_pos[0]:  # Left
+            robot.orientation = 180
+        elif next_pos[1] > current_pos[1]:  # Up
+            robot.orientation = 90
+        elif next_pos[1] < current_pos[1]:  # Down
+            robot.orientation = 270
+
+        robot.setheading(robot.orientation)
+
         # Move forward
         robot.move_forward()
+
+        # Change color after optimal path is found
+        if current_pos == optimal_path[0]:
+            robot.color('blue')
+
+
+        
+        if current_pos != optimal_path[-2]:
+            robot.move_forward()
+        else:
+            break  
 
     robot.pensize(1)  # Reset the pen size to the default
 
