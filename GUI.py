@@ -1,7 +1,6 @@
 import turtle
 from collections import deque
 
-# Constants
 CELL_SIZE = 40
 OBSTACLE = 'X'
 CLEANED = '.'
@@ -37,7 +36,7 @@ class Environment:
         turtle.pensize(1)
         turtle.color('black')
 
-        # Draw the grid
+        ########## Drawing the grid ###############
         for y in range(self.height):
             for x in range(self.width):
                 turtle.penup()
@@ -47,7 +46,7 @@ class Environment:
                     turtle.forward(CELL_SIZE)
                     turtle.left(90)
 
-                # Fill in obstacles
+                ############# Adding in the obstacles #############
                 if self.is_obstacle(x, y):
                     turtle.fillcolor('grey')
                     turtle.begin_fill()
@@ -55,14 +54,14 @@ class Environment:
                         turtle.forward(CELL_SIZE)
                         turtle.left(90)
                     turtle.end_fill()
-                elif self.grid[y][x] == START:
+                elif self.grid[y][x] == START: #Where the robot starts cleaning
                     turtle.fillcolor('green')
                     turtle.begin_fill()
                     for _ in range(4):
                         turtle.forward(CELL_SIZE)
                         turtle.left(90)
                     turtle.end_fill()
-                elif self.grid[y][x] == END:
+                elif self.grid[y][x] == END: #Where the charging station is
                     turtle.fillcolor('red')
                     turtle.begin_fill()
                     for _ in range(4):
@@ -76,7 +75,7 @@ class CleaningRobotTurtle(turtle.Turtle):
     def __init__(self, environment):
         super().__init__()
         self.environment = environment
-        self.orientation = 0  # 0: East, 90: North, 180: West, 270: South
+        self.orientation = 0  
         self.x, self.y = self.environment.start_pos
         self.shape('square')
         self.color('blue')
@@ -85,13 +84,13 @@ class CleaningRobotTurtle(turtle.Turtle):
 
     def move_forward(self):
         new_x, new_y = self.x, self.y
-        if self.orientation == 0:  # East
+        if self.orientation == 0:  # Which is East
             new_x += 1
-        elif self.orientation == 90:  # North
+        elif self.orientation == 90:  # Which is North
             new_y += 1
-        elif self.orientation == 180:  # West
+        elif self.orientation == 180:  # Which is West
             new_x -= 1
-        elif self.orientation == 270:  # South
+        elif self.orientation == 270:  # Which is South
             new_y -= 1
 
         if (0 <= new_x < self.environment.width and 0 <= new_y < self.environment.height):
@@ -99,7 +98,7 @@ class CleaningRobotTurtle(turtle.Turtle):
                 self.x, self.y = new_x, new_y
                 self.goto(self.x * CELL_SIZE + CELL_SIZE / 2, self.y * CELL_SIZE + CELL_SIZE / 2)
                 self.environment.clean_cell(self.x, self.y)
-                self.stamp()  # Stamp a cleaned mark
+                self.stamp()  # Add a mark showing it's been cleaned
 
     def turn_left(self):
         self.orientation = (self.orientation + 90) % 360
@@ -109,8 +108,11 @@ class CleaningRobotTurtle(turtle.Turtle):
         self.orientation = (self.orientation - 90) % 360
         self.setheading(self.orientation)
 
+
+
+
+   #####################  Manhattan distance heuristic   ####################
 def heuristic(pos, end):
-    """Manhattan distance heuristic"""
     x1, y1 = pos
     x2, y2 = end
     return abs(x1 - x2) + abs(y1 - y2)
@@ -150,6 +152,8 @@ def a_star_search(environment):
 
     return []
 
+
+               ########### Depth First Search ################
 def dfs(environment, start, end, path, visited, all_paths):
     if start == end:
         all_paths.append(path.copy())
@@ -282,7 +286,7 @@ def follow_path(robot, all_paths, optimal_path):
 
 # Set up the screen
 wn = turtle.Screen()
-wn.bgcolor("white")
+wn.bgpic("carpet.png")
 wn.title("Cleaning Robot Simulation")
 
 # Create environment with obstacles, start, and end positions
