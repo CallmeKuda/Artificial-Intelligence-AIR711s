@@ -150,10 +150,83 @@ def a_star_search(environment):
 
     return []
 
-def follow_path(robot, path):
-    for i in range(len(path) - 1):
-        current_pos = path[i]
-        next_pos = path[i + 1]
+def dfs(environment, start, end, path, visited, all_paths):
+    if start == end:
+        all_paths.append(path.copy())
+        return
+
+    visited.add(start)
+
+    for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+        neighbor = (start[0] + dx, start[1] + dy)
+        if (0 <= neighbor[0] < environment.width and 0 <= neighbor[1] < environment.height and
+                not environment.is_obstacle(neighbor[0], neighbor[1]) and neighbor not in visited):
+            path.append(neighbor)
+            dfs(environment, neighbor, end, path, visited, all_paths)
+            path.pop()
+
+    visited.remove(start)
+
+def explore_paths(environment):
+    start = environment.start_pos
+    end = environment.end_pos
+    all_paths = []
+    visited = set()
+    dfs(environment, start, end, [start], visited, all_paths)
+    return all_paths
+
+def follow_path(robot, all_paths, optimal_path):
+    # Follow all explored paths in black
+    robot.color('black')
+    for path in all_paths:
+        for i in range(len(path) - 1):
+            current_pos = path[i]
+            next_pos = path[i + 1]
+
+            # Determine the direction to turn
+            if next_pos[0] > current_pos[0]:  # Right
+                robot.orientation = 0
+            elif next_pos[0] < current_pos[0]:  # Left
+                robot.orientation = 180
+            elif next_pos[1] > current_pos[1]:  # Up
+                robot.orientation = 90
+            elif next_pos[1] < current_pos[1]:  # Down
+                robot.orientation = 270
+
+            robot.setheading(robot.orientation)
+
+            # Move forward
+            robot.move_forward()
+
+    # Follow the optimal path in green
+    robot.color('green')
+    robot.pensize(3)  # Increase the pen size to make the optimal path thicker
+    for i in range(len(optimal_path) - 1):
+        current_pos = optimal_path[i]
+        next_pos = optimal_path[i + 1]
+
+        # Determine the direction to turn
+        if next_pos[0] > current_pos[0]:  # Right
+            robot.orientation = 0
+        elif next_pos[0] < current_pos[0]:  # Left
+            robot.orientation = 180
+        elif next_pos[1] > current_pos[1]:  # Up
+            robot.orientation = 90
+        elif next_pos[1] < current_pos[1]:  # Down
+            robot.orientation = 270
+
+        robot.setheading(robot.orientation)
+
+        # Move forward
+        robot.move_forward()
+
+    robot.pensize(1)  # Reset the pen size to the default
+
+    # Follow the optimal path in red
+    robot.color('red')
+    for i in range(len(optimal_path) - 1):
+        current_pos = optimal_path[i]
+        next_pos = optimal_path[i + 1]
 
         # Determine the direction to turn
         if next_pos[0] > current_pos[0]:  # Right
@@ -185,12 +258,15 @@ environment.draw(turtle)
 # Create a cleaning robot
 robot = CleaningRobotTurtle(environment)
 
-# Find the optimal path using A* search
-path = a_star_search(environment)
-print("Optimal path:", path)
+# Explore all paths
+all_paths = explore_paths(environment)
 
-# Follow the path autonomously
-follow_path(robot, path)
+# Find the optimal path using A* search
+optimal_path = a_star_search(environment)
+print("Optimal path:", optimal_path)
+
+# Follow all explored paths and the optimal path
+follow_path(robot, all_paths, optimal_path)
 
 # Start the GUI loop
 turtle.done()
