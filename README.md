@@ -11,7 +11,10 @@
 
 ##### to run the application
 
+
+```bash
 python GUI.py
+```
 
 ![Example Image](./assets/environment.png)
 
@@ -34,8 +37,10 @@ python GUI.py
 
 ##### to run the application
 
+```bash
 pip install matplotlib>=3.0.0 numpy>=1.16.0
 python V2.py
+```
 
 
 
