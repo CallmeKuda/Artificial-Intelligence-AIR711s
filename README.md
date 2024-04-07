@@ -30,3 +30,9 @@
 #### This repository explores the application of the Hill climbing algorithm for solving the Traveling Salesman Problem (TSP) in the context of visiting various places in Windhoek. The objective is to visit a set of places exactly once, returning to the starting point, while minimizing total travel distance.
 
 ![Example Image](./assets/Question2.png)
+
+#### Total Distance
+![Example Image](./assets/totaldistance.png)
+
+#### Hill Climbing Algorithm
+![Example Image](./assets/hillclimbing.png)
