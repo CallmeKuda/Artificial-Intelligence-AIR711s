@@ -4,11 +4,13 @@
 ### This repository contains the implementation of two algorithms:
 
 1. A* search algorithm for a home cleaning robot navigating in a rectangular environment with obstacles.
+
  ![Alt Text](./assets/Question1.gif)
 
 
 ![Example Image](./assets/environment.png)
-       Code for constructing the enveronment
+
+Code for constructing the enveronment
 
 ![Example Image](./assets//Astar.png)
 
