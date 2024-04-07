@@ -35,8 +35,8 @@ python GUI.py
 ##### to run the application
 
 pip install matplotlib>=3.0.0 numpy>=1.16.0
-
 python V2.py
+
 
 
 ![Example Image](./assets/Question2.png)
