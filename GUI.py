@@ -6,7 +6,7 @@ OBSTACLE = 'X'
 CLEANED = '.'
 START = 'S'
 END = 'E'
-
+######### Tjari's does the enveronment ###########
 class Environment:
     def __init__(self, width, height, obstacles, start, end):
         self.width = width
@@ -180,34 +180,34 @@ def explore_paths(environment):
     return all_paths
 
 def follow_path(robot, all_paths, optimal_path):
-    # Follow all explored paths in black
+    ##################Follow all explored paths in black###################
     robot.color('black')
     for path in all_paths:
         for i in range(len(path) - 1):
             current_pos = path[i]
             next_pos = path[i + 1]
 
-            # Determine the direction to turn
-            if next_pos[0] > current_pos[0]:  # Right
+            ################## Determine the direction to turn #############################3
+            if next_pos[0] > current_pos[0]:  # For Right
                 robot.orientation = 0
-            elif next_pos[0] < current_pos[0]:  # Left
+            elif next_pos[0] < current_pos[0]:  # For Left
                 robot.orientation = 180
-            elif next_pos[1] > current_pos[1]:  # Up
+            elif next_pos[1] > current_pos[1]:  # For Up
                 robot.orientation = 90
-            elif next_pos[1] < current_pos[1]:  # Down
+            elif next_pos[1] < current_pos[1]:  # For Down
                 robot.orientation = 270
 
             robot.setheading(robot.orientation)
 
-            # Move forward
+            #tells the robot to move forward
             robot.move_forward()
 
-    # Follow the optimal path in green
+    ################# Follow the optimal path in the color green#######################
     robot.color('green')
-    robot.pensize(3)  # Increase the pen size to make the optimal path thicker
+    robot.pensize(3) 
     for i in range(len(optimal_path) - 1):
         current_pos = optimal_path[i]
-        next_pos = optimal_path[i + 1]
+        next_pos = optimal_path[i + 1]  #(THIS CURRENTLY HAS ISSUES)
 
         # Determine the direction to turn
         if next_pos[0] > current_pos[0]:  # Right
@@ -229,85 +229,24 @@ def follow_path(robot, all_paths, optimal_path):
 
     robot.pensize(1)  # Reset the pen size to the default
 
-    # Follow the optimal path in red
-    robot.color('red')
-    for i in range(len(optimal_path) - 1):
-        current_pos = optimal_path[i]
-        next_pos = optimal_path[i + 1]
 
-        # Determine the direction to turn
-        if next_pos[0] > current_pos[0]:  # Right
-            robot.orientation = 0
-        elif next_pos[0] < current_pos[0]:  # Left
-            robot.orientation = 180
-        elif next_pos[1] > current_pos[1]:  # Up
-            robot.orientation = 90
-        elif next_pos[1] < current_pos[1]:  # Down
-            robot.orientation = 270
-
-        robot.setheading(robot.orientation)
-
-        # Move forward
-        robot.move_forward()
-
-        # Change color after optimal path is found
-        if current_pos == optimal_path[0]:
-            robot.color('blue')
-
-
-        
-        if current_pos != optimal_path[-2]:
-            robot.move_forward()
-        else:
-            break  
-
-    robot.pensize(1)  # Reset the pen size to the default
-
-    # Follow the optimal path in red
-    robot.color('red')
-    for i in range(len(optimal_path) - 1):
-        current_pos = optimal_path[i]
-        next_pos = optimal_path[i + 1]
-
-        # Determine the direction to turn
-        if next_pos[0] > current_pos[0]:  # Right
-            robot.orientation = 0
-        elif next_pos[0] < current_pos[0]:  # Left
-            robot.orientation = 180
-        elif next_pos[1] > current_pos[1]:  # Up
-            robot.orientation = 90
-        elif next_pos[1] < current_pos[1]:  # Down
-            robot.orientation = 270
-
-        robot.setheading(robot.orientation)
-
-        # Move forward
-        robot.move_forward()
-
-# Set up the screen
 wn = turtle.Screen()
 wn.bgpic("carpet.png")
 wn.title("Cleaning Robot Simulation")
 
-# Create environment with obstacles, start, and end positions
 obstacles = [(1, 1), (1, 2), (2, 2), (3, 1)]
 start = (0, 0)
 end = (4, 4)
 environment = Environment(5, 5, obstacles, start, end)
 environment.draw(turtle)
 
-# Create a cleaning robot
 robot = CleaningRobotTurtle(environment)
 
-# Explore all paths
 all_paths = explore_paths(environment)
 
-# Find the optimal path using A* search
 optimal_path = a_star_search(environment)
 print("Optimal path:", optimal_path)
 
-# Follow all explored paths and the optimal path
 follow_path(robot, all_paths, optimal_path)
 
-# Start the GUI loop
 turtle.done()
